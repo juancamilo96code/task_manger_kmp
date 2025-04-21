@@ -1,0 +1,17 @@
+package com.vamaju.task.presentation.commons
+
+actual fun stringAppName(): String = "Task Manager"
+actual fun stringTaskInProgress(): String = "Tareas por Hacer"
+actual fun stringTaskFinished(): String = "Tareas Finalizadas"
+actual fun stringSearchTask(): String = "Buscar Tarea"
+actual fun stringTitleTask(): String = "Nombre de la Tarea"
+actual fun stringDescriptionTask(): String = "Descripción"
+actual fun stringResponsibleTask(): String = "Responsable"
+actual fun stringTag(): String = "Etiqueta"
+actual fun stringTags(): String = "Etiquetas"
+actual fun stringSave(): String = "Guardar"
+actual fun stringCancel(): String = "Cancelar"
+actual fun stringUpdate(): String  = "Actualizar"
+actual fun stringDelete(): String = "Eliminar"
+actual fun stringEdit(): String = "Editar"
+actual fun stringSearchTag(): String = "Buscar Etiqueta"

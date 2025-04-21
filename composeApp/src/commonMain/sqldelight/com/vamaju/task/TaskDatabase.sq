@@ -1,0 +1,114 @@
+CREATE TABLE Task (
+    id INTEGER NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    latitude REAL,
+    longitude REAL,
+    address TEXT,
+    responsible TEXT,
+    isCompleted INTEGER NOT NULL DEFAULT 0 -- 0 = false, 1 = true
+);
+
+CREATE TABLE Tag (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE TaskTag (
+    taskId INTEGER NOT NULL REFERENCES Task(id) ON DELETE CASCADE,
+    tagId INTEGER NOT NULL REFERENCES Tag(id) ON DELETE CASCADE,
+    PRIMARY KEY (taskId, tagId)
+);
+
+insertTask:
+INSERT INTO Task(title, description, latitude, longitude, address, responsible, isCompleted)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateTask:
+UPDATE Task
+SET title = ?, description = ?, latitude = ?, longitude = ?, address = ?, responsible = ?, isCompleted = ?
+WHERE id = ?;
+
+switchTask:
+UPDATE Task
+SET isCompleted = ?
+WHERE id = ?;
+
+deleteTask:
+DELETE FROM Task WHERE id = ?;
+
+selectAllTasks:
+SELECT
+    Task.id AS taskId,
+    Task.title,
+    Task.description,
+    Task.latitude,
+    Task.longitude,
+    Task.address,
+    Task.responsible,
+    Task.isCompleted,
+    Tag.id AS tagId,
+    Tag.name AS tagName
+FROM Task
+LEFT JOIN TaskTag ON Task.id = TaskTag.taskId
+LEFT JOIN Tag ON Tag.id = TaskTag.tagId;
+
+
+searchTasks:
+SELECT DISTINCT
+    Task.id AS taskId,
+    Task.title,
+    Task.description,
+    Task.latitude,
+    Task.longitude,
+    Task.address,
+    Task.responsible,
+    Task.isCompleted,
+    Tag.id AS tagId,
+    Tag.name AS tagName
+FROM Task
+LEFT JOIN TaskTag ON Task.id = TaskTag.taskId
+LEFT JOIN Tag ON Tag.id = TaskTag.tagId
+WHERE Task.title LIKE '%' || :query || '%'
+   OR Task.description LIKE '%' || :query || '%'
+   OR Task.address LIKE '%' || :query || '%'
+   OR Tag.name LIKE '%' || :query || '%';
+
+
+getTaskById:
+SELECT
+    Task.id AS taskId,
+    Task.title,
+    Task.description,
+    Task.latitude,
+    Task.longitude,
+    Task.address,
+    Task.responsible,
+    Task.isCompleted,
+    Tag.id AS tagId,
+    Tag.name AS tagName
+FROM Task
+LEFT JOIN TaskTag ON Task.id = TaskTag.taskId
+LEFT JOIN Tag ON Tag.id = TaskTag.tagId
+WHERE Task.id = ?;
+
+insertTag:
+INSERT OR IGNORE INTO Tag(name) VALUES (?);
+
+selectTagByName:
+SELECT * FROM Tag WHERE name = ?;
+
+selectAllTags:
+SELECT * FROM Tag;
+
+filterTagByName:
+SELECT * FROM Tag WHERE name LIKE '%' || ? || '%';
+
+insertTaskTag:
+INSERT OR IGNORE INTO TaskTag(taskId, tagId) VALUES (?, ?);
+
+deleteTagsForTask:
+DELETE FROM TaskTag WHERE taskId = ?;
+
+getLastInsertId:
+SELECT last_insert_rowid();
