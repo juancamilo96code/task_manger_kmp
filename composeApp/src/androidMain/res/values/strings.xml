@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+    <string name="task_in_progress">Tareas por Hacer</string>
+    <string name="task_finished">Tareas Finalizadas</string>
+    <string name="search_task">Buscar Tarea</string>
+    <string name="task_name">Nombre de la Tarea</string>
+    <string name="description">Descripción</string>
+    <string name="responsible">Responsable</string>
+    <string name="tag">Etiqueta</string>
+    <string name="tags">Etiquetas</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="update">Actualizar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    <string name="search_tag">Buscar Etiqueta</string>
+</resources>
